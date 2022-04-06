@@ -5,9 +5,15 @@ import "./styles.css";
 // import WhatsHappening from "./components/whats-happening/whats-happening";
 // import Bookmarks from "./components/bookmarks/bookmarks";
 import Tuiter from "./components/tuiter";
+import CodeMirrorTest from "./components/snippet";
 
 function App() {
-    return <Tuiter />;
+    return (
+        <>
+            <Tuiter />
+            <CodeMirrorTest />
+        </>
+    );
 }
 
 export default App;
