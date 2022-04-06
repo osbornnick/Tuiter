@@ -11,7 +11,10 @@ const CodeMirrorTest = () => {
         <>
             <CodeMirror
                 value={code}
-                options={{ theme: "monokai", keyMap: "sublime" }}
+                options={{
+                    theme: "monokai",
+                    keyMap: "sublime",
+                }}
                 extensions={[javascript({ jsx: true })]}
                 onChange={(val) => (code = val)}
             ></CodeMirror>
