@@ -9,7 +9,7 @@ function Navigation() {
     {label: 'Tuiter', icon: 'fa-square-t', path: '/tuiter'},
     {label: 'Home', icon: 'fa-home', path: '/home'},
     {label: 'Explore', icon: 'fa-hashtag', path: '/explore'},
-    {label: 'Snippets', icon: 'fa-code', path: '/snippets'},
+    {label: 'My Snippets', icon: 'fa-code', path: '/snippets'},
     {label: 'Notifications', icon: 'fa-bell', path: '/notifications'},
     {label: 'Messages', icon: 'fa-envelope', path: '/messages'},
     {label: 'Bookmarks', icon: 'fa-bookmark', path: '/bookmarks'},
