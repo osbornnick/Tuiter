@@ -1,0 +1,14 @@
+[
+    {
+        "code": "console.log('hello, world!');",
+        "author": "userID",
+        "created": "timestamp",
+        "forkedFrom:": null
+    },
+    {
+        "code": "const x = 2;\nconsole.log(`x = ${x}`)",
+        "author": "userID",
+        "created": "timestamp",
+        "forkedFrom:": null
+    }
+]
