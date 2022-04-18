@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { oneDark } from "@codemirror/theme-one-dark";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
+import * as snippetService from "../../services/snippets-service";
 
 const Snippet = ({ snippet }) => {
     const [output, setOutput] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [borderColor, setBorderColor] = useState("border-dark");
     const [code, setCode] = useState(
         snippet.code || "console.log('hello world!);"
     );
@@ -12,8 +15,17 @@ const Snippet = ({ snippet }) => {
     const saveCode = () => {
         // connect to backend
     };
-    const runCode = () => {
-        // compiler API
+    const runCode = async () => {
+        setLoading(true);
+        const response = await snippetService.runSnippet({ code });
+        if (response.status.id !== 3) {
+            setBorderColor("border-danger");
+            setOutput(response.stderr);
+        } else {
+            setBorderColor("border-success");
+            setOutput(response.stdout);
+        }
+        setLoading(false);
     };
 
     return (
@@ -33,8 +45,19 @@ const Snippet = ({ snippet }) => {
                     type="button"
                     className="btn btn-primary mt-2 ms-2"
                     onClick={runCode}
+                    disabled={loading}
                 >
-                    Run
+                    {loading ? (
+                        <div
+                            class="spinner-border"
+                            role="status"
+                            style={{ width: "20px", height: "20px" }}
+                        >
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    ) : (
+                        "Run"
+                    )}
                 </button>
                 <button
                     type="button"
@@ -46,8 +69,11 @@ const Snippet = ({ snippet }) => {
             </div>
             <div className="">
                 <div className="output-box">Output</div>
-                <div className="border" style={{ minHeight: "20px" }}>
-                    {output}
+                <div
+                    className={"border rounded " + borderColor}
+                    style={{ minHeight: "20px" }}
+                >
+                    <div className="p-2">{output}</div>
                 </div>
             </div>
         </div>
