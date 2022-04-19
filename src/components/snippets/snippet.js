@@ -55,7 +55,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
     const shareCode = () =>
         tuitService
             .createTuit("me", { tuit, snippet: snippet._id })
-            .then(navigate("/home"));
+            .then(navigate("/home")).then(refreshSnippets);
 
     const deleteSnippet = async () => {
         await snippetService.deleteSnippet(snippet._id);
