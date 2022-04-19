@@ -1,9 +1,11 @@
 import React from "react";
 import "./navigation.css";
-import { useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import * as snippetService from "../../services/snippets-service";
 
 function Navigation() {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
     // console.log(location.pathname);
     const links = [
         { label: "Tuiter", icon: "fa-square-t", path: "/tuiter" },
@@ -19,6 +21,16 @@ function Navigation() {
         { label: "Login", icon: "fa-user", path: "/login" },
         { label: "Signup", icon: "fa-user", path: "/signup" },
     ];
+
+    const handleNewSnippet = (evt) => {
+        snippetService
+            .createSnippet("me", {
+                code: "Hello, world!",
+            })
+            .then((snippet) => navigate("/snippets"))
+            .catch((err) => alert("you must be logged in to create a snippet"));
+    };
+
     return (
         <div className="ttr-navigation">
             <ul className="list-group">
@@ -49,7 +61,11 @@ function Navigation() {
             >
                 Tuit
             </a>
-            <button className="mt-2 btn btn-lg btn-info rounded-pill w-100 fw-bold text-white">
+            <button
+                className="mt-2 btn btn-lg btn-info rounded-pill w-100 fw-bold text-white"
+                onClick={handleNewSnippet}
+            >
+
                 Snippet
             </button>
         </div>
