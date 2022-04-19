@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { oneDark } from "@codemirror/theme-one-dark";
 import CodeMirror from "@uiw/react-codemirror";
@@ -63,7 +63,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
     };
 
     return (
-        <div className="container">
+        <div className="container border rounded p-3">
             <div className="d-flex justify-content-between">
                 <h4>
                     <input
