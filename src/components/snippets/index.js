@@ -9,16 +9,21 @@ const Snippets = () => {
     const [authorized, setAuthorized] = useState(true);
     const location = useLocation();
     useEffect(() => {
+        getMySnippets();
+    }, [location.key]);
+
+    const getMySnippets = () => {
+        setLoading(true);
         findSnippetsByUser("me")
             .then((response) => {
                 setMySnippets(response);
                 setLoading(false);
             })
-            .catch((res) => {
+            .catch((error) => {
                 setAuthorized(false);
                 setLoading(false);
             });
-    }, [location.key]);
+    };
     if (loading)
         return (
             <div className="d-flex justify-content-center">
@@ -37,7 +42,7 @@ const Snippets = () => {
         <div className="container">
             {mySnippets.map((snip) => (
                 <div className="row mb-4">
-                    <Snippet snippet={snip} />
+                    <Snippet snippet={snip} refreshSnippets={getMySnippets} />
                 </div>
             ))}
         </div>
