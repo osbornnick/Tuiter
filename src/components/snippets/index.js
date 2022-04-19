@@ -19,7 +19,7 @@ const Snippets = () => {
                 setMySnippets(response);
                 setLoading(false);
             })
-            .catch((res) => {
+            .catch((error) => {
                 setAuthorized(false);
                 setLoading(false);
             });

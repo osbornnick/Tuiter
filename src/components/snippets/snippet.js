@@ -9,21 +9,48 @@ import * as snippetService from "../../services/snippets-service";
 
 const Snippet = ({ snippet, refreshSnippets }) => {
     const [output, setOutput] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [borderColor, setBorderColor] = useState("border-dark");
     const [code, setCode] = useState(
         snippet.code || "console.log('hello world!);"
     );
     const [title, setTitle] = useState(snippet.title);
     const [show, setShow] = useState(false);
     const [tuit, setTuit] = useState("");
+    const [updated, setUpdated] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     let navigate = useNavigate();
 
-    const saveCode = () => {
-        // connect to backend
+    const updatedCodemirrorText = (value) => {
+        setCode(value);
+        setUpdated(true);
     };
-    const runCode = () => {
-        // compiler API
+
+    const save = async () => {
+        snippet.code = code;
+        const response = await snippetService.updateSnippet(snippet._id, {
+            code,
+            title,
+        });
+        if (response.modifiedCount === 1) {
+            setUpdated(false);
+        } else {
+            console.log(response);
+        }
+    };
+    const runCode = async () => {
+        setLoading(true);
+        const response = await snippetService.runSnippet({ code });
+        if (response.status.id !== 3) {
+            setBorderColor("border-danger");
+            setOutput(response.stderr);
+        } else {
+            setBorderColor("border-success");
+            setOutput(response.stdout);
+        }
+        setLoading(false);
     };
     const shareCode = () =>
         tuitService
@@ -43,7 +70,10 @@ const Snippet = ({ snippet, refreshSnippets }) => {
                         className="form-control"
                         defaultValue={title}
                         placeholder="Add a title"
-                        onChange={(evt) => setTitle(evt.target.value)}
+                        onChange={(evt) => {
+                            setUpdated(true);
+                            setTitle(evt.target.value);
+                        }}
                     ></input>
                 </h4>
                 <i
@@ -58,24 +88,36 @@ const Snippet = ({ snippet, refreshSnippets }) => {
                     height="200px"
                     theme={oneDark}
                     extensions={[javascript({ jsx: true })]}
-                    onChange={(value, viewUpdate) => setCode(value)}
+                    onChange={updatedCodemirrorText}
                 />
             </div>
-            {/* why does adding the row class here fuck everything up? */}
             <div className="d-flex justify-content-end">
                 <button
                     type="button"
                     className="btn btn-primary mt-2 ms-2"
                     onClick={runCode}
+                    disabled={loading}
                 >
-                    Run
+                    {loading ? (
+                        <div
+                            className="spinner-border"
+                            role="status"
+                            style={{ width: "20px", height: "20px" }}
+                        >
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    ) : (
+                        "Run"
+                    )}
                 </button>
                 <button
                     type="button"
+                    id="saveButton"
                     className="btn btn-success mt-2 ms-2"
-                    onClick={saveCode}
+                    onClick={save}
+                    disabled={!updated}
                 >
-                    Save
+                    {!updated ? "Saved" : "Save"}
                 </button>
                 <button
                     type="button"
@@ -87,8 +129,13 @@ const Snippet = ({ snippet, refreshSnippets }) => {
             </div>
             <div className="">
                 <div className="output-box">Output</div>
-                <div className="border" style={{ minHeight: "20px" }}>
-                    {output}
+                <div
+                    className={"border rounded " + borderColor}
+                    style={{ minHeight: "20px" }}
+                >
+                    <div className="p-2" style={{ whiteSpace: "pre-line" }}>
+                        {output}
+                    </div>
                 </div>
             </div>
             <Modal show={show} onHide={handleClose}>
