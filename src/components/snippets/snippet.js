@@ -15,13 +15,15 @@ const Snippet = ({ snippet }) => {
     const updatedCodemirrorText = (value) => {
         setCode(value);
         document.getElementById("saveButton").disabled = false;
-        document.getElementById("saveButton").textContent = "Save"
-    }
-    
+        document.getElementById("saveButton").textContent = "Save";
+    };
+
     const saveCode = async () => {
         snippet.code = code;
-        const response = await snippetService.updateSnippet(snippet._id, { code });
-        if(response.modifiedCount === 1) {
+        const response = await snippetService.updateSnippet(snippet._id, {
+            code,
+        });
+        if (response.modifiedCount === 1) {
             document.getElementById("saveButton").textContent = "Saved";
             document.getElementById("saveButton").disabled = true;
         } else {
@@ -76,10 +78,10 @@ const Snippet = ({ snippet }) => {
                 <button
                     type="button"
                     id="saveButton"
-                    className="btn btn-success mt-2 ms-2" 
+                    className="btn btn-success mt-2 ms-2"
                     onClick={saveCode}
                 >
-                   Save
+                    Save
                 </button>
             </div>
             <div className="">
