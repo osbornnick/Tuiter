@@ -17,7 +17,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
     const [title, setTitle] = useState(snippet.title);
     const [show, setShow] = useState(false);
     const [tuit, setTuit] = useState("");
-    const [updated, setUpdated] = useState(false);
+    const [updated, setUpdated] = useState(true);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -34,7 +34,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
             code,
             title,
         });
-        if (response.modifiedCount === 1) {
+        if (response.acknowledged) {
             setUpdated(false);
         } else {
             console.log(response);
