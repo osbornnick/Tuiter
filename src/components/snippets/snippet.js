@@ -5,6 +5,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { Modal, Button, Form } from "react-bootstrap";
 import * as service from "../../services/tuits-service";
+import * as snippetService from "../../services/snippets-service";
 
 const Snippet = ({ snippet }) => {
     const [output, setOutput] = useState("");
