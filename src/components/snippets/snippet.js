@@ -6,7 +6,6 @@ import { javascript } from "@codemirror/lang-javascript";
 import { Modal, Button, Form } from "react-bootstrap";
 import * as service from "../../services/tuits-service";
 
-
 const Snippet = ({ snippet }) => {
     const [output, setOutput] = useState("");
     const [code, setCode] = useState(
@@ -24,8 +23,11 @@ const Snippet = ({ snippet }) => {
     const runCode = () => {
         // compiler API
     };
-    const shareCode = () => service.createTuit("me", { tuit }).then(navigate('/home'));
-    
+    const shareCode = () =>
+        service
+            .createTuit("me", { tuit, snippet: snippet._id })
+            .then(navigate("/home"));
+
     return (
         <div className="container">
             <div className="row">
@@ -76,18 +78,22 @@ const Snippet = ({ snippet }) => {
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
-                            >
+                        >
                             <Form.Label>Tuit</Form.Label>
-                            <Form.Control as="textarea" rows={3} onChange={(e) => setTuit(e.target.value)} />
+                            <Form.Control
+                                as="textarea"
+                                rows={3}
+                                onChange={(e) => setTuit(e.target.value)}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                    Close
+                        Close
                     </Button>
                     <Button variant="primary" onClick={shareCode}>
-                    Share
+                        Share
                     </Button>
                 </Modal.Footer>
             </Modal>
