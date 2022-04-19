@@ -32,8 +32,8 @@ export const createSnippet = (uid, snippet) =>
 
 export const updateSnippet = (sid, snippet) =>
     api
-        .post(`${SNIPPETS_API}/${sid}`, snippet)
-        .then((response) => response.data);
+        .put(`${SNIPPETS_API}/${sid}`, snippet)
+        .then((response => response.data));
 
 export const deleteSnippet = (sid) =>
     api.delete(`${SNIPPETS_API}/${sid}`).then((response) => response.data);
