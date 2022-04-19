@@ -1,8 +1,9 @@
 [
     {
-        "code": "console.log('hello, world!');",
-        "author": "userID",
-        "created": "timestamp",
+        "_id": "625e2154b9e32feef09079bd",
+        "code": "console.log('snippettest snippet code');",
+        "author": "6254b142fbdf83437bd8b35d",
+        "created": "2022-04-19T02:41:24.588+00:00",
         "forkedFrom:": null
     },
     {
