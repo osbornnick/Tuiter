@@ -4,13 +4,15 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { Modal, Button, Form } from "react-bootstrap";
-import * as service from "../../services/tuits-service";
+import * as tuitService from "../../services/tuits-service";
+import * as snippetService from "../../services/snippets-service";
 
-const Snippet = ({ snippet }) => {
+const Snippet = ({ snippet, refreshSnippets }) => {
     const [output, setOutput] = useState("");
     const [code, setCode] = useState(
         snippet.code || "console.log('hello world!);"
     );
+    const [title, setTitle] = useState(snippet.title);
     const [show, setShow] = useState(false);
     const [tuit, setTuit] = useState("");
     const handleClose = () => setShow(false);
@@ -24,12 +26,32 @@ const Snippet = ({ snippet }) => {
         // compiler API
     };
     const shareCode = () =>
-        service
+        tuitService
             .createTuit("me", { tuit, snippet: snippet._id })
             .then(navigate("/home"));
 
+    const deleteSnippet = async () => {
+        await snippetService.deleteSnippet(snippet._id);
+        refreshSnippets();
+    };
+
     return (
         <div className="container">
+            <div className="d-flex justify-content-between">
+                <h4>
+                    <input
+                        className="form-control"
+                        defaultValue={title}
+                        placeholder="Add a title"
+                        onChange={(evt) => setTitle(evt.target.value)}
+                    ></input>
+                </h4>
+                <i
+                    onClick={deleteSnippet}
+                    className="fas fa-remove fa-2x"
+                    style={{ cursor: "pointer" }}
+                ></i>
+            </div>
             <div className="row">
                 <CodeMirror
                     value={code}
