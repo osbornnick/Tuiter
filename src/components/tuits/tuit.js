@@ -3,7 +3,7 @@ import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";
 import TuitVideo from "./tuit-video";
 import {Link} from "react-router-dom";
-import Snippet from "../snippets/snippet";
+import Snippet from "../snippets/snippetInTuit";
 import * as likesService from "../../services/likes-service";
 import * as snippetsService from "../../services/snippets-service";
 
@@ -55,8 +55,10 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
                     <span className="ms-1">{daysOld(tuit)}</span>
                 </h2>
                 {tuit.tuit}
+                <br/>
                 {tuit.youtube && <TuitVideo tuit={tuit}/>}
                 {tuit.image && <TuitImage tuit={tuit}/>}
+                <br/>
                 <Snippet snippet={getSnippet} refreshSnippets={getSnippet} />
                 <TuitStats tuit={tuit} likeTuit={likeTuit} dislikeTuit={dislikeTuit}/>
 
