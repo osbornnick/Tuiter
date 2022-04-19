@@ -24,7 +24,7 @@ const Snippet = ({ snippet }) => {
     const runCode = () => {
         // compiler API
     };
-    const shareCode = () => service.createTuit("my", { tuit }).then(navigate('/home'));
+    const shareCode = () => service.createTuit("me", { tuit }).then(navigate('/home'));
     
     return (
         <div className="container">
