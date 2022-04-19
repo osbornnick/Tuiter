@@ -12,8 +12,21 @@ const Snippet = ({ snippet }) => {
         snippet.code || "console.log('hello world!);"
     );
 
-    const saveCode = () => {
-        // connect to backend
+    const updatedCodemirrorText = (value) => {
+        setCode(value);
+        document.getElementById("saveButton").disabled = false;
+        document.getElementById("saveButton").textContent = "Save"
+    }
+    
+    const saveCode = async () => {
+        snippet.code = code;
+        const response = await snippetService.updateSnippet(snippet._id, { code });
+        if(response.modifiedCount === 1) {
+            document.getElementById("saveButton").textContent = "Saved";
+            document.getElementById("saveButton").disabled = true;
+        } else {
+            console.log(response);
+        }
     };
     const runCode = async () => {
         setLoading(true);
@@ -36,7 +49,8 @@ const Snippet = ({ snippet }) => {
                     height="200px"
                     theme={oneDark}
                     extensions={[javascript({ jsx: true })]}
-                    onChange={(value, viewUpdate) => setCode(value)}
+                    /*onChange={(value, viewUpdate) => setCode(value)}*/
+                    onChange={updatedCodemirrorText}
                 />
             </div>
             {/* why does adding the row class here fuck everything up? */}
@@ -61,10 +75,11 @@ const Snippet = ({ snippet }) => {
                 </button>
                 <button
                     type="button"
-                    className="btn btn-success mt-2 ms-2"
+                    id="saveButton"
+                    className="btn btn-success mt-2 ms-2" 
                     onClick={saveCode}
                 >
-                    Save
+                   Save
                 </button>
             </div>
             <div className="">
