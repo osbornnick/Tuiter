@@ -17,13 +17,7 @@ export const findSnippetById = (sid) =>
     api.get(`${SNIPPETS_API}/${sid}`).then((response) => response.data);
 
 export const findSnippetsByUser = (uid) =>
-    api
-        .get(`${USERS_API}/${uid}/snippets`)
-        .then((response) => response.data)
-        .catch((err) => {
-            console.log(err);
-            return [];
-        });
+    api.get(`${USERS_API}/${uid}/snippets`).then((response) => response.data);
 
 export const createSnippet = (uid, snippet) =>
     api
@@ -33,7 +27,7 @@ export const createSnippet = (uid, snippet) =>
 export const updateSnippet = (sid, snippet) =>
     api
         .put(`${SNIPPETS_API}/${sid}`, snippet)
-        .then((response => response.data));
+        .then((response) => response.data);
 
 export const deleteSnippet = (sid) =>
     api.delete(`${SNIPPETS_API}/${sid}`).then((response) => response.data);
