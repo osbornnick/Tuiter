@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { oneDark } from "@codemirror/theme-one-dark";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
@@ -51,11 +51,9 @@ const Snippet = ({ snippet }) => {
                     height="200px"
                     theme={oneDark}
                     extensions={[javascript({ jsx: true })]}
-                    /*onChange={(value, viewUpdate) => setCode(value)}*/
                     onChange={updatedCodemirrorText}
                 />
             </div>
-            {/* why does adding the row class here fuck everything up? */}
             <div className="d-flex justify-content-end">
                 <button
                     type="button"
@@ -65,11 +63,11 @@ const Snippet = ({ snippet }) => {
                 >
                     {loading ? (
                         <div
-                            class="spinner-border"
+                            className="spinner-border"
                             role="status"
                             style={{ width: "20px", height: "20px" }}
                         >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                         </div>
                     ) : (
                         "Run"
@@ -90,7 +88,9 @@ const Snippet = ({ snippet }) => {
                     className={"border rounded " + borderColor}
                     style={{ minHeight: "20px" }}
                 >
-                    <div className="p-2">{output}</div>
+                    <div className="p-2" style={{ whiteSpace: "pre-line" }}>
+                        {output}
+                    </div>
                 </div>
             </div>
         </div>
