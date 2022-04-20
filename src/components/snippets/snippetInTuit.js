@@ -7,6 +7,7 @@ import * as snippetService from "../../services/snippets-service";
 
 const Snippet = ({ snippetId }) => {
     const [snippet, setSnippet] = useState({ code: "loading..." });
+    const [forked, setForked] = useState(true);
 
     useEffect(() => {
         snippetService
@@ -31,6 +32,12 @@ const Snippet = ({ snippetId }) => {
             setOutput(response.stdout);
         }
         setLoading(false);
+    };
+    const forkCode = async () => {
+        await snippetService.createSnippet("me", { 
+            code: snippet.code, forkedFrom: snippet._id
+        });
+        setForked(false);
     };
     return (
         <div className="container border rounded p-2">
@@ -61,6 +68,14 @@ const Snippet = ({ snippetId }) => {
                     ) : (
                         "Run"
                     )}
+                </button>
+                <button
+                    type="button"
+                    className="btn btn-info mt-2 ms-2"
+                    onClick={forkCode}
+                    disabled={!forked}
+                >
+                    {!forked ? "Forked" : "Fork"}
                 </button>
             </div>
             <div className="">
