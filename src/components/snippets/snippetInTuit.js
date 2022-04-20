@@ -40,7 +40,7 @@ const Snippet = ({ snippetId }) => {
                     height="200px"
                     theme={oneDark}
                     extensions={[javascript({ jsx: true })]}
-                    options={{ readOnly: true }}
+                    editable={false}
                 />
             </div>
             <div className="d-flex justify-content-end">
