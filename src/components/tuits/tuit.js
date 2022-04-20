@@ -3,6 +3,7 @@ import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";
 import TuitVideo from "./tuit-video";
 import { Link } from "react-router-dom";
+import Snippet from "../snippets/snippetInTuit";
 
 const Tuit = ({ tuit, deleteTuit, likeTuit, dislikeTuit }) => {
     const daysOld = (tuit) => {
@@ -27,6 +28,7 @@ const Tuit = ({ tuit, deleteTuit, likeTuit, dislikeTuit }) => {
         }
         return old;
     };
+
     return (
         // <li onClick={() => navigate(`/tuit/${tuit._id}`)}
         <li className="p-2 ttr-tuit list-group-item d-flex rounded-0">
@@ -42,9 +44,9 @@ const Tuit = ({ tuit, deleteTuit, likeTuit, dislikeTuit }) => {
                 <i
                     onClick={() => deleteTuit(tuit._id)}
                     className="fas fa-remove fa-2x fa-pull-right"
-                ></i>
+                />
                 <Link to={`/tuit/${tuit._id}`}>
-                    <i className="float-end fas fa-circle-ellipsis me-1"></i>
+                    <i className="float-end fas fa-circle-ellipsis me-1" />
                 </Link>
                 <h2 className="fs-5">
                     {tuit.postedBy && tuit.postedBy.username}@
@@ -52,8 +54,11 @@ const Tuit = ({ tuit, deleteTuit, likeTuit, dislikeTuit }) => {
                     <span className="ms-1">{daysOld(tuit)}</span>
                 </h2>
                 {tuit.tuit}
+                <br />
                 {tuit.youtube && <TuitVideo tuit={tuit} />}
                 {tuit.image && <TuitImage tuit={tuit} />}
+                <br />
+                {tuit.snippet && <Snippet snippetId={tuit.snippet} />}
                 <TuitStats
                     tuit={tuit}
                     likeTuit={likeTuit}

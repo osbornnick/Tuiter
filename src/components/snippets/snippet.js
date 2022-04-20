@@ -52,10 +52,10 @@ const Snippet = ({ snippet, refreshSnippets }) => {
         }
         setLoading(false);
     };
-    const shareCode = () =>
-        tuitService
-            .createTuit("me", { tuit, snippet: snippet._id })
-            .then(navigate("/home"));
+    const shareCode = async () => {
+        await tuitService.createTuit("me", { tuit, snippet: snippet._id });
+        navigate("/home");
+    };
 
     const deleteSnippet = async () => {
         await snippetService.deleteSnippet(snippet._id);
