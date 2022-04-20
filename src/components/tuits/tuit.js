@@ -2,12 +2,10 @@ import React from "react";
 import TuitStats from "./tuit-stats";
 import TuitImage from "./tuit-image";
 import TuitVideo from "./tuit-video";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Snippet from "../snippets/snippetInTuit";
-import * as likesService from "../../services/likes-service";
-import * as snippetsService from "../../services/snippets-service";
 
-const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
+const Tuit = ({ tuit, deleteTuit, likeTuit, dislikeTuit }) => {
     const daysOld = (tuit) => {
         const now = new Date();
         const nowMillis = now.getTime();
@@ -31,23 +29,24 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
         return old;
     };
 
-    const getSnippet = (tuit) => {
-        snippetsService.findSnippetById(tuit.snippet._id)
-    };
     return (
         // <li onClick={() => navigate(`/tuit/${tuit._id}`)}
         <li className="p-2 ttr-tuit list-group-item d-flex rounded-0">
             <div className="pe-2">
                 {tuit.postedBy && (
-                    <img src={`../images/${tuit.postedBy.username}.jpg`}
-                         className="ttr-tuit-avatar-logo rounded-circle"/>
+                    <img
+                        src={`../images/${tuit.postedBy.username}.jpg`}
+                        className="ttr-tuit-avatar-logo rounded-circle"
+                    />
                 )}
             </div>
             <div className="w-100">
-                <i onClick={() => deleteTuit(tuit._id)}
-                   className="fas fa-remove fa-2x fa-pull-right"/>
+                <i
+                    onClick={() => deleteTuit(tuit._id)}
+                    className="fas fa-remove fa-2x fa-pull-right"
+                />
                 <Link to={`/tuit/${tuit._id}`}>
-                    <i className="float-end fas fa-circle-ellipsis me-1"/>
+                    <i className="float-end fas fa-circle-ellipsis me-1" />
                 </Link>
                 <h2 className="fs-5">
                     {tuit.postedBy && tuit.postedBy.username}@
@@ -55,13 +54,16 @@ const Tuit = ({tuit, deleteTuit, likeTuit, dislikeTuit}) => {
                     <span className="ms-1">{daysOld(tuit)}</span>
                 </h2>
                 {tuit.tuit}
-                <br/>
-                {tuit.youtube && <TuitVideo tuit={tuit}/>}
-                {tuit.image && <TuitImage tuit={tuit}/>}
-                <br/>
-                <Snippet snippet={getSnippet} refreshSnippets={getSnippet} />
-                <TuitStats tuit={tuit} likeTuit={likeTuit} dislikeTuit={dislikeTuit}/>
-
+                <br />
+                {tuit.youtube && <TuitVideo tuit={tuit} />}
+                {tuit.image && <TuitImage tuit={tuit} />}
+                <br />
+                {tuit.snippet && <Snippet snippetId={tuit.snippet} />}
+                <TuitStats
+                    tuit={tuit}
+                    likeTuit={likeTuit}
+                    dislikeTuit={dislikeTuit}
+                />
             </div>
         </li>
     );
