@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Snippet from "./snippet";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { findSnippetsByUser } from "../../services/snippets-service";
 
@@ -8,6 +9,7 @@ const Snippets = () => {
     const [mySnippets, setMySnippets] = useState([]);
     const [authorized, setAuthorized] = useState(true);
     const location = useLocation();
+    const navigate = useNavigate();
     useEffect(() => {
         getMySnippets();
     }, [location.key]);
@@ -32,12 +34,7 @@ const Snippets = () => {
                 </div>
             </div>
         );
-    if (!authorized)
-        return (
-            <div className="d-flex justify-content-center">
-                <h3>Login to view and make snippets</h3>
-            </div>
-        );
+    if (!authorized) navigate("/login");
     return (
         <div className="container">
             {mySnippets.map((snip) => (
