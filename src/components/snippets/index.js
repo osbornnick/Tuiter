@@ -22,8 +22,8 @@ const Snippets = () => {
                 setLoading(false);
             })
             .catch((error) => {
-                setAuthorized(false);
                 setLoading(false);
+                navigate("/login");
             });
     };
     if (loading)
@@ -34,7 +34,6 @@ const Snippets = () => {
                 </div>
             </div>
         );
-    if (!authorized) navigate("/login");
     return (
         <div className="container">
             {mySnippets.map((snip) => (
