@@ -7,7 +7,6 @@ import { findSnippetsByUser } from "../../services/snippets-service";
 const Snippets = () => {
     const [loading, setLoading] = useState(true);
     const [mySnippets, setMySnippets] = useState([]);
-    const [authorized, setAuthorized] = useState(true);
     const location = useLocation();
     const navigate = useNavigate();
     useEffect(() => {
