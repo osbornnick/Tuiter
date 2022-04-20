@@ -33,11 +33,11 @@ const Snippet = ({ snippetId }) => {
         setLoading(false);
     };
     return (
-        <div className="container">
+        <div className="container border rounded p-2">
             <div className="row">
                 <CodeMirror
                     value={snippet.code}
-                    height="200px"
+                    height="150px"
                     theme={oneDark}
                     extensions={[javascript({ jsx: true })]}
                     editable={false}
