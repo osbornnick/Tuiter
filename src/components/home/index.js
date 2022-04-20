@@ -13,12 +13,8 @@ const Home = () => {
     const findTuits = () =>
         service.findAllTuits().then((tuits) => setTuits(tuits));
     useEffect(() => {
-        let isMounted = true;
         findTuits();
-        return () => {
-            isMounted = false;
-        };
-    }, []);
+    }, [location.key]);
     const createTuit = () => service.createTuit("me", { tuit }).then(findTuits);
     return (
         <div className="ttr-home">
