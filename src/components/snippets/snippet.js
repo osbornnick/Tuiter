@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { oneDark } from "@codemirror/theme-one-dark";
 import CodeMirror from "@uiw/react-codemirror";
@@ -17,7 +17,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
     const [title, setTitle] = useState(snippet.title);
     const [show, setShow] = useState(false);
     const [tuit, setTuit] = useState("");
-    const [updated, setUpdated] = useState(false);
+    const [updated, setUpdated] = useState(true);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -34,7 +34,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
             code,
             title,
         });
-        if (response.modifiedCount === 1) {
+        if (response.acknowledged) {
             setUpdated(false);
         } else {
             console.log(response);
@@ -63,7 +63,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
     };
 
     return (
-        <div className="container">
+        <div className="container border rounded p-3">
             <div className="d-flex justify-content-between">
                 <h4>
                     <input
