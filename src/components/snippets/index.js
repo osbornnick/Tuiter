@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Snippet from "./snippet";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { findSnippetsByUser } from "../../services/snippets-service";
 
 const Snippets = () => {
     const [loading, setLoading] = useState(true);
     const [mySnippets, setMySnippets] = useState([]);
-    const [authorized, setAuthorized] = useState(true);
     const location = useLocation();
+    const navigate = useNavigate();
     useEffect(() => {
         getMySnippets();
     }, [location.key]);
@@ -20,8 +21,8 @@ const Snippets = () => {
                 setLoading(false);
             })
             .catch((error) => {
-                setAuthorized(false);
                 setLoading(false);
+                navigate("/login");
             });
     };
     if (loading)
@@ -30,12 +31,6 @@ const Snippets = () => {
                 <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
-            </div>
-        );
-    if (!authorized)
-        return (
-            <div className="d-flex justify-content-center">
-                <h3>Login to view and make snippets</h3>
             </div>
         );
     return (
