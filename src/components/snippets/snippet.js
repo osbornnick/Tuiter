@@ -12,7 +12,7 @@ const Snippet = ({ snippet, refreshSnippets }) => {
     const [loading, setLoading] = useState(false);
     const [borderColor, setBorderColor] = useState("border-dark");
     const [code, setCode] = useState(
-        snippet.code || "console.log('hello world!);"
+        snippet.code || "console.log('hello world!');"
     );
     const [title, setTitle] = useState(snippet.title);
     const [show, setShow] = useState(false);
