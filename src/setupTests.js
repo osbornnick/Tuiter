@@ -5,3 +5,5 @@
 import "@testing-library/jest-dom";
 import "regenerator-runtime/runtime";
 import "dotenv/config";
+
+global.XMLHttpRequest = undefined;
